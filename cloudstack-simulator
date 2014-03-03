@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# cloudstack-simulator CloudStack Simulator
+#
+# chkconfig: 345 50 50
+# description: CloudStack Simulator Service
+
+M2_HOME=/usr/local/apache-maven-3.0.5
+PATH=${M2_HOME}/bin:${PATH}
+CLOUDSTACK_HOME=/root/cloudstack/
+CLOUDSTACK_LOGFILE=/var/log/cloudstack-simulator.log
+
+case "$1" in
+  start)
+    echo -n "Starting CloudStack Simulator: "
+    cd $CLOUDSTACK_HOME
+    nohup mvn -Dnet.sf.ehcache.disabled=true -Dsimulator -pl client jetty:run > $CLOUDSTACK_LOGFILE 2>&1 &
+    echo "OK"
+    ;;
+  fstart)
+    echo -n "Starting CloudStack Simulator (foreground): "
+    cd $CLOUDSTACK_HOME
+    nohup mvn -Dnet.sf.ehcache.disabled=true -Dsimulator -pl client jetty:run > $CLOUDSTACK_LOGFILE 2>&1
+    echo "OK"
+    ;;
+  stop)
+    echo -n "Stopping CloudStack Simulator: "
+    cd $CLOUDSTACK_HOME
+    mvn -Dsimulator -pl client jetty:stop
+    echo "OK"
+    ;;
+  reload|restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 start|stop|restart|reload"
+    exit 1
+esac
+exit 0
