@@ -1,4 +1,4 @@
-FROM blalor/centos
+FROM centos:centos6
 
 ADD . /tmp/cloudstack-simulator
 
