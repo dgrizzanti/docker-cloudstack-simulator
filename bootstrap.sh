@@ -4,6 +4,8 @@ source_dir=/tmp/cloudstack-simulator
 destination_dir=/root
 cloudstack_dir=$destination_dir/cloudstack
 
+yum update -y
+yum install wget -y
 # Dependencies
 rpm -i http://mirror.metrocast.net/fedora/epel/6/i386/epel-release-6-8.noarch.rpm || true
 rpm -i http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || true
@@ -26,8 +28,8 @@ yum install \
   python-pip \
   tomcat6 \
   supervisor \
-  wget \
   git \
+  which \
   -y
 
 # RabbitMQ
